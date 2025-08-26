@@ -14,15 +14,14 @@ Just like Talabat makes ordering food seamless and engaging, I believe resumes c
 ---
 
 ## 🔗 Live Resume
-👉 [View it here](https://yourusername.github.io/talabat-resume/)  
-*(Replace with your GitHub Pages or Netlify link)*
+👉 [View it here](https://kdv-kalash-05.github.io/talabat-resume/)  
 
 ---
 
 ## 📬 Contact
 **Kalash Darshan Vimawala**  
 📧 vimawalakalash05@gmail.com | 📱 +91 8238722419  
-[LinkedIn](https://linkedin.com/in/yourprofile)
+[LinkedIn](https://www.linkedin.com/in/kalash-vimawala/)
 
 ---
 

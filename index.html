@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kalash Vimawala — Talabat‑style Resume Homepage</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --talabat-orange:#FF6600; /* primary */
+      --talabat-blue:#AAC4E7;   /* secondary */
+      --talabat-green:#28a745;  /* accent */
+      --bg:#f7f7f7;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --card:#ffffff;
+      --shadow:0 6px 18px rgba(0,0,0,.08);
+      --radius:16px;
+      --radius-sm:12px;
+      --maxw:1180px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text);background:var(--bg)}
+    a{color:inherit;text-decoration:none}
+
+    /* ===== Top Header (Talabat-like) ===== */
+    .topbar{position:sticky;top:0;z-index:50;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.05)}
+    .topbar-inner{max-width:var(--maxw);margin:auto;display:flex;align-items:center;gap:16px;padding:12px 20px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand-badge{width:36px;height:36px;border-radius:10px;background:var(--talabat-orange);display:grid;place-items:center;color:#fff;font-weight:800}
+    .brand-title{font-weight:700}
+    .search{flex:1;display:flex;gap:8px}
+    .search input{flex:1;padding:12px 14px;border:1px solid #e5e7eb;border-radius:10px;background:#fff}
+    .actions{display:flex;gap:10px;align-items:center}
+    .btn{padding:10px 14px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;cursor:pointer}
+    .btn.primary{background:var(--talabat-orange);border-color:var(--talabat-orange);color:#fff}
+
+    /* ===== Hero Carousel ===== */
+    .hero{background:linear-gradient(135deg,var(--talabat-orange),#ff7f32);color:#fff}
+    .hero-wrap{max-width:var(--maxw);margin:auto;padding:28px 20px 32px}
+    .carousel{position:relative;overflow:hidden;border-radius:var(--radius);box-shadow:var(--shadow)}
+    .slides{display:flex;transition:transform .5s ease}
+    .slide{min-width:100%;display:grid;grid-template-columns:1.1fr .9fr}
+    .hero-left{padding:36px}
+    .kicker{display:inline-block;background:rgba(255,255,255,.2);padding:6px 10px;border-radius:999px;font-size:12px;margin-bottom:12px}
+    .hero h1{margin:0 0 6px 0;font-size:36px;letter-spacing:.2px}
+    .subtitle{font-weight:500;margin-bottom:18px}
+    .pill{display:inline-flex;gap:8px;flex-wrap:wrap}
+    .pill span{background:#fff;color:#1f2937;border-radius:999px;padding:8px 12px;font-size:12px}
+    .hero-cta{margin-top:18px;display:flex;gap:10px}
+    .hero-cta .btn{border:none}
+    .hero-right{background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="%23AAC4E7"/><stop offset="100%" stop-color="%23ffffff"/></linearGradient></defs><rect width="100%" height="100%" fill="url(%23g)"/><g opacity="0.18" fill="%23ffffff"><circle cx="80" cy="80" r="50"/><circle cx="200" cy="120" r="35"/><circle cx="360" cy="90" r="60"/><circle cx="520" cy="160" r="45"/></g></svg>') center/cover no-repeat;border-left:1px solid rgba(255,255,255,.2);display:grid;place-items:center}
+    .hero-right .card{background:#fff;color:#111;width:86%;border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+    .hero-nav{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px}
+    .hero-nav button{width:38px;height:38px;border:none;border-radius:999px;background:rgba(255,255,255,.9);cursor:pointer}
+
+    /* ===== Section Scaffolding ===== */
+    .section{max-width:var(--maxw);margin:28px auto;padding:0 20px}
+    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .section-title{font-size:22px;font-weight:700}
+    .see-all{font-size:13px;color:var(--talabat-orange)}
+
+    /* ===== Category Tiles (Skills) ===== */
+    .tiles{display:grid;grid-template-columns:repeat(6,minmax(140px,1fr));gap:14px}
+    .tile{background:var(--card);border-radius:var(--radius-sm);padding:14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;transition:transform .18s ease}
+    .tile:hover{transform:translateY(-3px)}
+    .tile .icon{width:40px;height:40px;border-radius:10px;background:var(--talabat-blue);display:grid;place-items:center;font-weight:700}
+    .chip{display:inline-block;background:#eef3fb;border-radius:999px;padding:6px 10px;font-size:12px;margin:3px 4px 0 0}
+
+    /* ===== Horizontal Carousels ===== */
+    .row{position:relative}
+    .cards{display:flex;gap:14px;overflow:auto;scroll-behavior:smooth;padding-bottom:6px}
+    .card{flex:0 0 340px;background:var(--card);border-radius:var(--radius-sm);box-shadow:var(--shadow);overflow:hidden}
+    .card-head{height:120px;background:linear-gradient(135deg,var(--talabat-blue),#eaf1fb)}
+    .card-body{padding:14px}
+    .meta{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;margin:6px 0}
+    .badge{display:inline-block;background:var(--talabat-orange);color:#fff;border-radius:999px;padding:4px 8px;font-size:11px;margin-right:6px}
+    .nav-btn{position:absolute;top:40%;transform:translateY(-50%);border:none;background:#fff;border-radius:999px;width:40px;height:40px;box-shadow:var(--shadow);cursor:pointer}
+    .nav-btn.prev{left:-4px}
+    .nav-btn.next{right:-4px}
+
+    /* ===== Promotions (Awards) ===== */
+    .promo{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .promo .card{flex:1}
+
+    /* ===== Footer ===== */
+    footer{background:#fff;margin-top:34px;border-top:1px solid #eee}
+    .foot{max-width:var(--maxw);margin:auto;padding:22px 20px;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:18px}
+    .brand-col .brand-badge{margin-bottom:10px}
+    .foot h4{margin:0 0 10px 0;font-size:14px}
+    .foot a{display:block;color:#475569;font-size:13px;padding:6px 0}
+
+    /* Responsive */
+    @media (max-width:1100px){.tiles{grid-template-columns:repeat(3,1fr)}}
+    @media (max-width:800px){.slide{grid-template-columns:1fr}.hero-right{display:none}.tiles{grid-template-columns:repeat(2,1fr)}.card{flex-basis:76vw}}
+  </style>
+</head>
+<body>
+  <!-- ===== Header ===== -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">t</div>
+        <div class="brand-title">talabat‑inspired | Kalash</div>
+      </div>
+      <div class="search">
+        <input type="text" placeholder="Search my experience, skills, education…" aria-label="Search resume"/>
+      </div>
+      <div class="actions">
+        <button class="btn" onclick="document.getElementById('skills').scrollIntoView({behavior:'smooth'})">Skills</button>
+        <button class="btn" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})">Experience</button>
+        <button class="btn primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="hero-wrap">
+      <div class="carousel" id="heroCarousel">
+        <div class="slides">
+          <!-- Slide 1: Identity -->
+          <div class="slide">
+            <div class="hero-left">
+              <span class="kicker">APM‑focused • Growth & Product</span>
+              <h1>KALASH DARSHAN VIMAWALA</h1>
+              <div class="subtitle">Senior Growth Analyst turned Product‑minded builder. Data‑driven, fast‑shipping, KPI‑obsessed.</div>
+              <div class="pill">
+                <span>SQL</span><span>Mixpanel</span><span>Python</span><span>Looker</span><span>Flutter</span><span>Figma</span>
+              </div>
+              <div class="hero-cta">
+                <a class="btn" href="#experience">See Experience</a>
+                <a class="btn primary" href="#skills">Explore Skills</a>
+              </div>
+            </div>
+            <div class="hero-right">
+              <div class="card">
+                <strong>Quick Contact</strong>
+                <div style="color:var(--muted);font-size:14px;margin-top:6px">+91 8238722419 • vimawalakalash05@gmail.com</div>
+              </div>
+            </div>
+          </div>
+          <!-- Slide 2: Highlights -->
+          <div class="slide">
+            <div class="hero-left">
+              <span class="kicker">Impact Highlights</span>
+              <h1>3× growth, real‑time control towers, CAC down</h1>
+              <div class="subtitle">Examples from Careem & Zepto: rapid experimentation, automation, and metric‑driven scale‑ups.</div>
+              <div class="pill">
+                <span>3× Abu Dhabi Groceries</span><span>+12k orders</span><span>BTL 4×</span><span>–15% CAC</span>
+              </div>
+              <div class="hero-cta">
+                <a class="btn" href="#awards">See Awards</a>
+                <a class="btn primary" href="#volunteering">See Leadership</a>
+              </div>
+            </div>
+            <div class="hero-right">
+              <div class="card">
+                <strong>Currently</strong>
+                <div style="color:var(--muted);font-size:14px;margin-top:6px">Senior Growth Analyst — Careem (Nov 2024 – Present)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-nav">
+          <button aria-label="Previous" onclick="heroSlide(-1)">‹</button>
+          <button aria-label="Next" onclick="heroSlide(1)">›</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Categories/Tiles: Skills ===== -->
+  <section id="skills" class="section">
+    <div class="section-header">
+      <div class="section-title">What would you like to explore?</div>
+      <a class="see-all" href="#skills">All skills</a>
+    </div>
+    <div class="tiles">
+      <div class="tile">
+        <div class="icon">🧠</div>
+        <div style="font-weight:700">Technical Skills</div>
+        <div>
+          <span class="chip">SQL</span>
+          <span class="chip">Mixpanel</span>
+          <span class="chip">Microsoft Office</span>
+          <span class="chip">Google Apps Script</span>
+          <span class="chip">Python</span>
+          <span class="chip">Looker</span>
+          <span class="chip">Flutter</span>
+          <span class="chip">Figma</span>
+          <span class="chip">Blender</span>
+        </div>
+      </div>
+      <div class="tile">
+        <div class="icon">📈</div>
+        <div style="font-weight:700">Growth Ops</div>
+        <div class="muted">Experimentation, funnels, CRM automation</div>
+      </div>
+      <div class="tile">
+        <div class="icon">🛠️</div>
+        <div style="font-weight:700">Tooling</div>
+        <div class="muted">Dashboards, reporting, real‑time metrics</div>
+      </div>
+      <div class="tile">
+        <div class="icon">🎯</div>
+        <div style="font-weight:700">KPIs</div>
+        <div class="muted">OPD, CAC, CTR, NM%</div>
+      </div>
+      <div class="tile">
+        <div class="icon">👥</div>
+        <div style="font-weight:700">Leadership</div>
+        <div class="muted">Mentorship, cross‑functional alignment</div>
+      </div>
+      <div class="tile">
+        <div class="icon">📦</div>
+        <div style="font-weight:700">Product Delivery</div>
+        <div class="muted">0→1 ideation, GTM, iteration</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Restaurants Carousel: Work Experience ===== -->
+  <section id="experience" class="section">
+    <div class="section-header">
+      <div class="section-title">Popular near you • Work Experience</div>
+      <a class="see-all" href="#experience">See all</a>
+    </div>
+    <div class="row">
+      <button class="nav-btn prev" onclick="scrollRow('expRow',-1)">‹</button>
+      <div id="expRow" class="cards">
+        <!-- Careem -->
+        <article class="card">
+          <div class="card-head"></div>
+          <div class="card-body">
+            <h3 style="margin:0">Senior Growth Analyst — Growth</h3>
+            <div class="meta">Careem — The Everything App <span>•</span> <span>Nov 2024 – Present</span></div>
+            <div><span class="badge">3× growth</span> Grew Abu Dhabi Groceries by 3x within 4 months with ~5pop new user graduation loss.</div>
+            <ul style="margin:10px 0 0 18px">
+              <li>Revamped reporting and growth infrastructure for 5 key verticals on Platform.</li>
+            </ul>
+          </div>
+        </article>
+        <!-- Zepto SM1 -->
+        <article class="card">
+          <div class="card-head"></div>
+          <div class="card-body">
+            <h3 style="margin:0">Senior Manager 1 — Growth</h3>
+            <div class="meta">Zepto — Q‑commerce (≈$5bn) <span>•</span> <span>Jul 2022 – Oct 2024</span></div>
+            <ul style="margin:6px 0 0 18px">
+              <li>Grew New Stores OPD from 0 to 45k through Pricing, Ops, Marketing & Supply strategy.</li>
+              <li>Mentored 2 analysts to scale and improve performance tracking and executive reporting.</li>
+            </ul>
+          </div>
+        </article>
+        <!-- Zepto M2 -->
+        <article class="card">
+          <div class="card-head"></div>
+          <div class="card-body">
+            <h3 style="margin:0">Manager 2 — Growth</h3>
+            <div class="meta">Zepto <span>•</span> <span>Jul 2023 – Apr 2024</span></div>
+            <ul style="margin:6px 0 0 18px">
+              <li>Saved 5% man‑hours by automating CRM operations, improving CTR 0.01pp MoM.</li>
+              <li>Improved First‑Time Buyers conversion by 0.1pp, adding 12,000+ incremental orders.</li>
+              <li>Scaled BTL 4x with 15% CAC reduction through fraud monitoring and process automation.</li>
+              <li>Built Growth Control Tower, cutting anomaly discovery time to 1hr via 40+ real‑time metrics.</li>
+            </ul>
+          </div>
+        </article>
+        <!-- Zepto Intern -->
+        <article class="card">
+          <div class="card-head"></div>
+          <div class="card-body">
+            <h3 style="margin:0">Events & Merchandising Intern</h3>
+            <div class="meta">Zepto <span>•</span> <span>Jul 2022 – Dec 2022</span></div>
+            <ul style="margin:6px 0 0 18px">
+              <li>Coordinated multiple verticals for events leading 6% AOV growth; curated top products resulting in 10bps growth in platform NM%.</li>
+              <li>Spearheaded merchandising operations for SKU bundling; data‑driven recommendations boosting Quantity per Bill by 15% WoW.</li>
+              <li>Managed the largest gifting campaign delivering gift boxes to 3 lakh customers increasing gross profit by 8% for 12 days.</li>
+            </ul>
+          </div>
+        </article>
+        <!-- Chapter -->
+        <article class="card">
+          <div class="card-head"></div>
+          <div class="card-body">
+            <h3 style="margin:0">Co‑Founder</h3>
+            <div class="meta">Chapter — contactless collaborative ordering <span>•</span> <span>Aug 2019 – Apr 2021</span></div>
+            <ul style="margin:6px 0 0 18px">
+              <li>Received incubation offers from PIEDS, BITS Pilani & NSUT‑IIF including equity funding of INR 4 lakh, valuation at INR 1.32 crore.</li>
+              <li>Spearheaded ideation, market research & product development; pitched to 200 potential clients and 25+ investors.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+      <button class="nav-btn next" onclick="scrollRow('expRow',1)">›</button>
+    </div>
+  </section>
+
+  <!-- ===== Grocery Grid: Volunteering & Leadership ===== -->
+  <section id="volunteering" class="section">
+    <div class="section-header">
+      <div class="section-title">Top picks for you • Volunteering & Leadership</div>
+      <a class="see-all" href="#volunteering">See all</a>
+    </div>
+    <div class="row">
+      <button class="nav-btn prev" onclick="scrollRow('volRow',-1)">‹</button>
+      <div id="volRow" class="cards">
+        <article class="card">
+          <div class="card-head" style="background:linear-gradient(135deg,#e8fff0,#c9f5d8)"></div>
+          <div class="card-body">
+            <h3 style="margin:0">Coordinator — Training & Placement Unit</h3>
+            <ul style="margin:8px 0 0 18px">
+              <li>Led training for 500+ students, conducted resume reviews for ~100 students, organized mock GDs/interviews for ~250 candidates.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-head" style="background:linear-gradient(135deg,#e8fff0,#c9f5d8)"></div>
+          <div class="card-body">
+            <h3 style="margin:0">Coordinator — Peer Mentorship Program</h3>
+            <ul style="margin:8px 0 0 18px">
+              <li>Spearheaded onboarding & training of 120+ mentors, impacting 1000+ freshmen.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-head" style="background:linear-gradient(135deg,#e8fff0,#c9f5d8)"></div>
+          <div class="card-body">
+            <h3 style="margin:0">Strategist — AbeerGulaal Foundation</h3>
+            <ul style="margin:8px 0 0 18px">
+              <li>Raised INR 25,000 for pad donation drives (3,000 pads); provided sex education to 600 students in 10+ schools.</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-head" style="background:linear-gradient(135deg,#e8fff0,#c9f5d8)"></div>
+          <div class="card-body">
+            <h3 style="margin:0">Captain — BITS Swimming Team</h3>
+            <ul style="margin:8px 0 0 18px">
+              <li>Won 50+ State medals, competed in 15 Nationals; Won 5 Gold, 1 Silver at BITS Open Sports Meet 2019.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+      <button class="nav-btn next" onclick="scrollRow('volRow',1)">›</button>
+    </div>
+  </section>
+
+  <!-- ===== Promotions/Offers: Awards & Achievements ===== -->
+  <section id="awards" class="section">
+    <div class="section-header">
+      <div class="section-title">Deals & promos • Awards & Achievements</div>
+      <a class="see-all" href="#awards">See all</a>
+    </div>
+    <div class="promo">
+      <article class="card">
+        <div class="card-head" style="background:linear-gradient(135deg,#fff0e6,#ffe6d6)"></div>
+        <div class="card-body">
+          <h3 style="margin:0">PM School</h3>
+          <p style="margin:8px 0 0">Ideated Social Travel for Facebook; developed wireframe; determined KPIs, success metrics, projections & revenue potential.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head" style="background:linear-gradient(135deg,#fff0e6,#ffe6d6)"></div>
+        <div class="card-body">
+          <h3 style="margin:0">Upraised Embark, 2021</h3>
+          <p style="margin:8px 0 0">Selected in Top 2% from 4.5 lakh+ students for Product & Growth.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head" style="background:linear-gradient(135deg,#fff0e6,#ffe6d6)"></div>
+        <div class="card-body">
+          <h3 style="margin:0">Conquest by CEL</h3>
+          <p style="margin:8px 0 0">Shortlisted in Top 50 startups out of 3000+ registrations as 'Chapter'; pitched to 15+ industry leaders & investors.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head" style="background:linear-gradient(135deg,#fff0e6,#ffe6d6)"></div>
+        <div class="card-body">
+          <h3 style="margin:0">DesertHack by CEL</h3>
+          <p style="margin:8px 0 0">Stood 2nd out of 30; received a prize of INR 25,000 for B‑Plan, pitching & prototyping in 72 hours.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== Education ===== -->
+  <section id="education" class="section">
+    <div class="section-header">
+      <div class="section-title">Education</div>
+      <a class="see-all" href="#education">See details</a>
+    </div>
+    <div class="card" style="max-width:820px">
+      <div class="card-body">
+        <h3 style="margin:0">B.E. (Hons.), Mechanical Engineering</h3>
+        <div class="meta">BITS Pilani <span>•</span> <span>Jan 2023</span></div>
+        <ul style="margin:8px 0 0 18px">
+          <li>CGPA: 7.73</li>
+          <li>Minor in Finance (Principles of Economics, Financial Management, Business Analysis & Valuation).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer id="contact">
+    <div class="foot">
+      <div class="brand-col">
+        <div class="brand-badge">t</div>
+        <div class="brand-title" style="font-weight:700;margin-bottom:8px">talabat‑inspired resume</div>
+        <div style="color:var(--muted);font-size:13px">Designed to mirror Talabat's desktop homepage layout while showcasing Kalash's APM‑ready experience.</div>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#volunteering">Volunteering</a>
+        <a href="#awards">Awards</a>
+        <a href="#education">Education</a>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <a href="mailto:vimawalakalash05@gmail.com">vimawalakalash05@gmail.com</a>
+        <a href="tel:+918238722419">+91 8238722419</a>
+      </div>
+      <div>
+        <h4>APM Focus</h4>
+        <a>Experiment‑led growth</a>
+        <a>Metrics & insights</a>
+        <a>Cross‑functional delivery</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Simple hero carousel
+    let heroIndex = 0;
+    const slides = document.querySelectorAll('.slides .slide');
+    function renderHero(){
+      const container = document.querySelector('.slides');
+      container.style.transform = `translateX(-${heroIndex*100}%)`;
+    }
+    function heroSlide(dir){
+      heroIndex = (heroIndex + dir + slides.length) % slides.length;
+      renderHero();
+    }
+    setInterval(()=>heroSlide(1), 6000);
+
+    // Horizontal row scrollers
+    function scrollRow(id,dir){
+      const el = document.getElementById(id);
+      el.scrollBy({left: dir * 360, behavior:'smooth'});
+    }
+  </script>
+</body>
+</html>
